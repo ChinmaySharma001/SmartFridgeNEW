@@ -2,7 +2,7 @@
 
 # 🧊 SmartFridge
 
-**AI-powered smart fridge inventory and recipe assistant**
+**AI-powered smart fridge inventory, scanning, and recipe assistant**
 
 [![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-API-009688?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
@@ -10,15 +10,22 @@
 [![Vite](https://img.shields.io/badge/Vite-5-646CFF?style=flat&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-7-47A248?style=flat&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Gemini](https://img.shields.io/badge/Gemini-Recipes-8E75B2?style=flat&logo=googlegemini&logoColor=white)](https://ai.google.dev/)
 
 <br />
 
-Scan grocery items, track expiry, and ask the AI chef for recipe ideas.  
-Backed by FastAPI with YOLOv8 + OCR and a premium React UI.
+Scan groceries, extract labels with OCR, track expiry, and ask the AI chef for ideas.  
+FastAPI powers the API, YOLOv8 + OCR handle scanning, and a premium React UI runs the client.
 
-[Getting Started](#-getting-started) · [API Reference](#-api-endpoints) · [Project Structure](#-project-structure)
+[Overview](#-overview) · [Getting Started](#-getting-started) · [API Reference](#-api-endpoints) · [Project Structure](#-project-structure)
 
 </div>
+
+---
+
+## 🌟 Overview
+
+SmartFridge helps reduce food waste by combining inventory tracking with AI-assisted scanning and recipes. Upload a label photo or use the camera on mobile, let OCR parse items, and keep everything in a clean dashboard with expiry alerts and quick edits.
 
 ---
 
@@ -32,6 +39,22 @@ Backed by FastAPI with YOLOv8 + OCR and a premium React UI.
 | 🧪 | **YOLOv8 Detection** | Image-based detection for groceries and labels |
 | 👩‍🍳 | **AI Chef** | Gemini-powered recipe suggestions and Q&A |
 | 📱 | **Mobile Friendly** | Responsive UI with bottom-tab navigation |
+| ⚡ | **Real-Time UI** | Optimistic updates and toast notifications |
+
+---
+
+## 🧭 Architecture At A Glance
+
+```
+Frontend (React + Vite)
+	|
+	v
+FastAPI backend  ---> MongoDB
+   |     |\
+   |     | \__ YOLOv8
+   |     \____ OCR (PaddleOCR / Google Vision)
+   \__________ Gemini (recipes + Q&A)
+```
 
 ---
 
@@ -118,14 +141,14 @@ If using Google Vision OCR, place credentials at:
 backend/google-credentials.json
 ```
 
-### 3. Run
+### 3. Run (Docker Compose)
 
 ```bash
-# Docker Compose (frontend + backend + MongoDB)
+# Frontend + backend + MongoDB
 docker compose up --build
 ```
 
-Or run locally:
+### 4. Run (Local Dev)
 
 ```bash
 # Backend
@@ -141,9 +164,22 @@ npm install
 npm run dev
 ```
 
-### 4. Verify
+The frontend dev server proxies `/api` to `http://127.0.0.1:8000`.
+
+### 5. Verify
 
 Open the app at `http://localhost:3000` and the API docs at `http://localhost:8000/docs`.
+
+---
+
+## 🔐 Environment Variables
+
+| Variable | Required | Purpose |
+|----------|----------|---------|
+| `GEMINI_API_KEY` | Yes | AI recipes and chef Q&A |
+| `MONGO_URI` | Yes | MongoDB connection string |
+| `GOOGLE_APPLICATION_CREDENTIALS` | No | Google Vision OCR credentials path |
+| `DB_NAME` | No | Override Mongo database name |
 
 ---
 
@@ -200,6 +236,14 @@ docker compose up --build
 docker compose down
 docker compose down -v
 ```
+
+---
+
+## 🧰 Notes
+
+- Uploads are stored in `backend/static/uploads`. Avoid committing these.
+- Model weights (YOLO `.pt`) are not tracked in Git. Add them locally or mount into Docker.
+- For OCR fallback, set `GOOGLE_APPLICATION_CREDENTIALS` to a valid JSON file path.
 
 ---
 
