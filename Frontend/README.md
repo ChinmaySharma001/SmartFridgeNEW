@@ -17,10 +17,7 @@ Premium glassmorphism React frontend for the SmartFridge AI application.
 
 ## Quick Start
 
-### Option A — Standalone HTML (zero setup)
-Open `index.html` directly in a browser. Demo data is shown automatically when the backend is offline.
-
-### Option B — Vite Dev Server (full setup)
+### Vite Dev Server (recommended)
 
 ```bash
 # 1. Install dependencies
@@ -33,7 +30,16 @@ npm run dev
 npm run build
 ```
 
-Rename `index-vite.html` → `index.html` for the Vite version.
+The app proxies `/api` requests to the backend at `http://127.0.0.1:8000` during development.
+
+### Static Preview
+
+Use `npm run build` and `npm run preview` to verify the production bundle locally.
+
+### Notes
+
+- No frontend env file is required by default.
+- Make sure the backend is running before using scanner, inventory, or recipe features.
 
 ## Project Structure
 
