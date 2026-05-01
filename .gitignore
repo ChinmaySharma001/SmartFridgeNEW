@@ -70,6 +70,8 @@ temp/
 # Project-generated uploads and reports
 backend/temp_uploads/
 backend.bfg-report/
+backend/static/uploads/
+static/uploads/
 
 # Dataset and OCR pipeline outputs
 smartfridge-dataset/ocr_runs/
@@ -88,3 +90,9 @@ smartfridge-dataset/GoogleCloudSDKInstaller.exe
 *.ckpt
 *.bin
 results.csv
+
+# Frontend build / deps
+Frontend/node_modules/
+Frontend/dist/
+Frontend/.env.local
+Frontend/package-lock.json
