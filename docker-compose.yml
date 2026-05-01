@@ -1,0 +1,47 @@
+services:
+  frontend:
+    build:
+      context: ./Frontend
+    container_name: smartfridge-frontend
+    ports:
+      - "3000:80"
+    volumes:
+      - ./Frontend/dist:/usr/share/nginx/html:ro
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+    container_name: smartfridge-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+      DB_NAME: smartfridge
+    volumes:
+      - ./backend/app:/app/app
+      - ./backend/static/uploads:/app/static/uploads
+      - ./backend/temp_uploads:/app/temp_uploads
+      - paddle_models:/root/.paddleocr
+      - ultralytics_models:/root/.config/Ultralytics
+    depends_on:
+      - mongo
+    restart: unless-stopped
+
+  mongo:
+    image: mongo:7
+    container_name: smartfridge-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    restart: unless-stopped
+
+volumes:
+  mongo_data:
+  paddle_models:
+  ultralytics_models:

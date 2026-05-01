@@ -1,6 +1,8 @@
 # backend_integration_example.py
 from fastapi import FastAPI, File, UploadFile, Form
-import shutil, os, uuid
+import shutil
+import os
+import uuid
 from detect_wrapper import predict_one
 
 app = FastAPI()

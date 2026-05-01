@@ -56,6 +56,7 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+backend/google-credentials.json
 *.pem
 *.key
 *.crt
@@ -80,6 +81,7 @@ smartfridge-dataset/GoogleCloudSDKInstaller.exe
 
 # Model weights and inference artifacts
 *.pt
+!backend/app/ml/grocery_yolov8n.pt
 *.pth
 *.onnx
 *.engine

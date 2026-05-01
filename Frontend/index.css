@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+/* ── Design tokens ────────────────────────────────────────── */
+:root {
+  --bg-void: #050810;
+  --bg-deep: #080d1a;
+  --bg-surface: #0d1526;
+  --bg-glass: rgba(13, 21, 38, 0.6);
+  --bg-glass-hover: rgba(20, 32, 58, 0.75);
+  --border-glass: rgba(99, 157, 255, 0.12);
+  --border-glow: rgba(99, 157, 255, 0.3);
+
+  --mint: #00e5a0;
+  --mint-dim: rgba(0, 229, 160, 0.12);
+  --mint-glow: rgba(0, 229, 160, 0.35);
+
+  --amber: #f59e0b;
+  --amber-dim: rgba(245, 158, 11, 0.12);
+
+  --coral: #ff4d6d;
+  --coral-dim: rgba(255, 77, 109, 0.12);
+  --coral-glow: rgba(255, 77, 109, 0.35);
+
+  --blue: #639dff;
+  --blue-dim: rgba(99, 157, 255, 0.1);
+
+  --text-prime: #e8edf8;
+  --text-sec: #8a9bbf;
+  --text-muted: #4a5878;
+}
+
+/* ── Base ────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  height: 100%;
+  background: var(--bg-void);
+  color: var(--text-prime);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(99, 157, 255, 0.18); border-radius: 2px; }
+
+/* Noise texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+/* ── Typography ──────────────────────────────────────────── */
+.font-display { font-family: 'Syne', sans-serif; }
+
+/* ── Glass panels ────────────────────────────────────────── */
+.glass {
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.glass-bright {
+  background: rgba(20, 32, 58, 0.75);
+  border: 1px solid rgba(99, 157, 255, 0.2);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* ── Skeleton loader ─────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 25%,
+    rgba(255, 255, 255, 0.07) 50%,
+    rgba(255, 255, 255, 0.03) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+/* ── Custom animations ───────────────────────────────────── */
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes scanMove {
+  0% { top: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* ── Scan animation ──────────────────────────────────────── */
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--mint), var(--mint), transparent);
+  box-shadow: 0 0 20px var(--mint), 0 0 40px rgba(0, 229, 160, 0.3);
+  animation: scanMove 2s ease-in-out infinite;
+}
+
+/* ── Chat markdown ───────────────────────────────────────── */
+.md-body h1, .md-body h2, .md-body h3 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  margin: 10px 0 5px;
+}
+.md-body h1 { font-size: 1rem; }
+.md-body h2 { font-size: 0.95rem; }
+.md-body h3 { font-size: 0.9rem; }
+.md-body p { margin-bottom: 8px; line-height: 1.65; }
+.md-body p:last-child { margin-bottom: 0; }
+.md-body ul, .md-body ol { padding-left: 18px; margin-bottom: 8px; }
+.md-body li { margin-bottom: 4px; }
+.md-body strong { color: var(--mint); font-weight: 600; }
+.md-body code { background: rgba(99,157,255,0.1); padding: 1px 5px; border-radius: 4px; font-size: 0.8em; }
+.md-body hr { border: none; border-top: 1px solid var(--border-glass); margin: 10px 0; }
